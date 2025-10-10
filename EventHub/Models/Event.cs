@@ -8,7 +8,7 @@
         public DateTime Date { get; set; }
         public DateTime BookingEndDate { get; set; }
         public int OrganizerId { get; set; }
-        public int VenueId { get; set; }
+        public int? VenueId { get; set; }
         public ICollection<Booking> Bookings { get; set; } = [];
 
         public required User Organizer { get; set; }

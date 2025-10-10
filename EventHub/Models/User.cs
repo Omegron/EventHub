@@ -2,9 +2,7 @@
 
 namespace EventHub.Models
 {
-    public class User : IdentityUser
     {
-        //public int Id { get; set; }
         public required string Username { get; set; }
         public required string HashPassword { get; set; }
 

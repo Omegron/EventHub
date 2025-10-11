@@ -1,12 +1,17 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using System.Runtime.Intrinsics.X86;
 
 namespace EventHub.Models
 {
-    public class User
+    public class User : IdentityUser
     {
-        public int Id { get; set; }
-        public required string Username { get; set; }
-        public required string HashPassword { get; set; }
+        // From IdentityUser:
+        // string Id (GUID as string)
+        // string UserName
+        // string Email
+        // string PasswordHash
+
+        //public UserRole Role { get; set; } = UserRole.User;
 
         public ICollection<Booking> Bookings { get; set; } = []; //ordinary user
         public ICollection<Event> OrganizedEvents { get; set; } = []; //organizer

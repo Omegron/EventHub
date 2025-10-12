@@ -25,7 +25,7 @@ namespace EventHub.Services.Implementations
             var booking = await _context.Bookings.FirstAsync(b => b.Id == id);
             return _mapper.Map<BookingViewDto>(booking);
         }
-        public async Task<IEnumerable<BookingViewDto>> GetBookingsByUserIdAsync(int id)
+        public async Task<IEnumerable<BookingViewDto>> GetBookingsByUserIdAsync(string id)
         {
             var bookings = await _context.Bookings.Where(b => b.UserId == id).ToListAsync();
             return _mapper.Map<IEnumerable<BookingViewDto>>(bookings);

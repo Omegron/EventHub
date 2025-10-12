@@ -11,8 +11,6 @@ namespace EventHub.Models
         // string Email
         // string PasswordHash
 
-        //public UserRole Role { get; set; } = UserRole.User;
-
         public ICollection<Booking> Bookings { get; set; } = []; //ordinary user
         public ICollection<Event> OrganizedEvents { get; set; } = []; //organizer
         public ICollection<Venue> CreatedVenues { get; set; } = []; //admin

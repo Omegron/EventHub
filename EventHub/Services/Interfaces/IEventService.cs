@@ -5,7 +5,7 @@ namespace EventHub.Services.Interfaces
     public interface IEventService
     {
         Task<EventViewDto> GetEventByIdAsync(int id);
-        Task<IEnumerable<EventViewDto>> GetEventsByOrganizerIdAsync(int id);
+        Task<IEnumerable<EventViewDto>> GetEventsByOrganizerIdAsync(string id);
         Task<IEnumerable<EventViewDto>> GetAllEventsAsync();
         Task<int> GetEventFreeSeatsAsync(int id);
         Task CreateEventAsync(EventCreateDto dto);

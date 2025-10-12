@@ -1,9 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using EventHub.Models;
 
 namespace EventHub.Data
 {
-    public class AppDbContext : DbContext
+    public class AppDbContext : IdentityDbContext
     {
         public AppDbContext(DbContextOptions options) : base(options)
         {
@@ -13,10 +14,13 @@ namespace EventHub.Data
         {
         }
 
-        public DbSet<User> Users { get; set; }
         public DbSet<Event> Events { get; set; }
         public DbSet<Venue> Venues { get; set; }
         public DbSet<Booking> Bookings { get; set; }
 
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
+        }
     }
 }

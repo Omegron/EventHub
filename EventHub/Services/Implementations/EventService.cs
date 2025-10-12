@@ -25,7 +25,7 @@ namespace EventHub.Services.Implementations
             var ev = await _context.Events.FirstAsync(e => e.Id == id);
             return _mapper.Map<EventViewDto>(ev);
         }
-        public async Task<IEnumerable<EventViewDto>> GetEventsByOrganizerIdAsync(int id)
+        public async Task<IEnumerable<EventViewDto>> GetEventsByOrganizerIdAsync(string id)
         {
             var events = await _context.Events.Where(e => e.OrganizerId == id).ToListAsync();
             return _mapper.Map<IEnumerable<EventViewDto>>(events);

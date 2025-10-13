@@ -13,7 +13,7 @@ namespace EventHub.Services.Interfaces
         Task<string> GetUserRoleAsync(string id);
         Task UserRegisterAsync(UserRegisterDto dto);
         Task UserAuthAsync(UserAuthDto dto);
-        Task UdateUserUsernameAsync(UserUsernameUpdateDto dto);
+        Task UpdateUserUsernameAsync(UserUsernameUpdateDto dto);
         Task UpdateUserPasswordAsync(UserPasswordUpdateDto dto);
         Task UpdateUserEmailAsync(UserEmailUpdateDto dto);
         Task DeleteUserAsync(string id);

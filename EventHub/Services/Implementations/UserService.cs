@@ -29,13 +29,10 @@ namespace EventHub.Services.Implementations
         }
         public async Task<IEnumerable<UserViewDto>> GetUsersByEventIdAsync(int id)
         {
-            var bookings = await _context.Bookings.Where(b => b.EventId == id).ToListAsync();
-            var users = _context.Users;
-            foreach (var booking in bookings)
-            {
-                var user = await _context.Users.FirstAsync(u => u.Id == booking.UserId);
-                users.Add(user);
-            }
+            var users = await _context.Bookings
+                .Where(b => b.EventId == id)
+                .Select(b => b.User)
+                .ToListAsync();
             return _mapper.Map<IEnumerable<UserViewDto>>(users);
         }
 
@@ -57,10 +54,8 @@ namespace EventHub.Services.Implementations
         }
         public async Task UserRegisterAsync(UserRegisterDto dto)
         {
-            var userExists1 = await _userManager.FindByNameAsync(dto.Username);
-            if (userExists1 != null) { throw new Exception("Username is already taken"); }
-            var userExists2 = await _userManager.FindByEmailAsync(dto.Email);
-            if (userExists2 != null) { throw new Exception("Email is already taken"); }
+            if (await _userManager.FindByNameAsync(dto.Username) != null) { throw new Exception("Username is already taken"); }
+            if (await _userManager.FindByEmailAsync(dto.Email) != null) { throw new Exception("Email is already taken"); }
             if (dto.Password != dto.ConfirmPassword) { throw new Exception("Passwords don't match"); }
 
             var user = new User
@@ -76,7 +71,7 @@ namespace EventHub.Services.Implementations
         {
             throw new NotImplementedException();
         }
-        public async Task UdateUserUsernameAsync(UserUsernameUpdateDto dto)
+        public async Task UpdateUserUsernameAsync(UserUsernameUpdateDto dto)
         {
             var userExists = await _userManager.FindByNameAsync(dto.NewUsername);
             if (userExists != null) { throw new Exception("Username is already taken"); }
@@ -87,14 +82,19 @@ namespace EventHub.Services.Implementations
         {
             if (dto.NewPassword != dto.ConfirmNewPassword) { throw new Exception("Passwords dont't match"); }
             var user = await _userManager.FindByIdAsync(dto.Id);
-            if (user != null) { await _userManager.ChangePasswordAsync(user, user.PasswordHash, dto.NewPassword); }
+            if (user == null) { throw new Exception("User not found"); }
+            var result = await _userManager.ChangePasswordAsync(user, dto.OldPassword, dto.NewPassword);
+            if (!result.Succeeded) { throw new Exception("Old password is wrong"); }
         }
         public async Task UpdateUserEmailAsync(UserEmailUpdateDto dto)
         {
             var userExists = await _userManager.FindByEmailAsync(dto.NewEmail);
             if (userExists != null) { throw new Exception("Email is already taken"); }
             var user = await _userManager.FindByIdAsync(dto.Id);
-            if (user != null) { await _userManager.ChangeEmailAsync(user, dto.NewEmail, null); }
+            if (user != null)
+            {
+                user.Email = dto.NewEmail;
+            }
         }
         public async Task DeleteUserAsync(string id)
         {

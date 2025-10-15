@@ -1,21 +1,19 @@
 ﻿using EventHub.DTOs;
-using EventHub.Models;
-using System.Runtime.Intrinsics.X86;
 
 namespace EventHub.Services.Interfaces
 {
     public interface IUserService
     {
-        Task<UserViewDto> GetUserByIdAsync(string id);
-        Task<IEnumerable<UserViewDto>> GetUsersByEventIdAsync(int id);
-        Task<IEnumerable<UserViewDto>> GetUsersByRoleAsync(string role);
-        Task<IEnumerable<UserViewDto>> GetAllUsersAsync();
-        Task<string> GetUserRoleAsync(string id);
-        Task UserRegisterAsync(UserRegisterDto dto);
-        Task UserAuthAsync(UserAuthDto dto);
-        Task UpdateUserUsernameAsync(UserUsernameUpdateDto dto);
-        Task UpdateUserPasswordAsync(UserPasswordUpdateDto dto);
-        Task UpdateUserEmailAsync(UserEmailUpdateDto dto);
-        Task DeleteUserAsync(string id);
+        Task<UserViewDto> GetUserByIdAsync(string id); //UserC, AdminC
+        Task<IEnumerable<UserViewDto>> GetUsersByEventIdAsync(int id); //EventsC, AdminC
+        Task<IEnumerable<UserViewDto>> GetUsersByRoleAsync(string role); //AdminC
+        Task<IEnumerable<UserViewDto>> GetAllUsersAsync(); //AdminC
+        Task<string> GetUserRoleAsync(string id); //AdminC
+        Task UserRegisterAsync(UserRegisterDto dto); //UserC
+        Task UserAuthAsync(UserAuthDto dto); //UserC
+        Task UpdateUserUsernameAsync(UserUsernameUpdateDto dto); //UserC
+        Task UpdateUserPasswordAsync(UserPasswordUpdateDto dto); //UserC
+        Task UpdateUserEmailAsync(UserEmailUpdateDto dto); //UserC
+        Task DeleteUserAsync(string id); //UserC, AdminC
     }
 }

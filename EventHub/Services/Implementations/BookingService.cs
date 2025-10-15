@@ -4,6 +4,7 @@ using EventHub.DTOs;
 using EventHub.Models;
 using EventHub.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using System.Runtime.Intrinsics.X86;
 
 namespace EventHub.Services.Implementations
 {
@@ -28,6 +29,12 @@ namespace EventHub.Services.Implementations
         public async Task<IEnumerable<BookingViewDto>> GetBookingsByUserIdAsync(string id)
         {
             var bookings = await _context.Bookings.Where(b => b.UserId == id).ToListAsync();
+            return _mapper.Map<IEnumerable<BookingViewDto>>(bookings);
+        }
+        public async Task<IEnumerable<BookingViewDto>> GetBookingsByUserIdAsync(string userId, string organizerId)
+        {
+            var bookings = await _context.Bookings.Where(b => b.UserId == userId && b.Event.OrganizerId == organizerId).ToListAsync();
+            //var bookings = await _context.Bookings.Where(b => b.UserId == userId).ToListAsync();
             return _mapper.Map<IEnumerable<BookingViewDto>>(bookings);
         }
         public async Task<IEnumerable<BookingViewDto>> GetBookingsByEventIdAsync(int id)

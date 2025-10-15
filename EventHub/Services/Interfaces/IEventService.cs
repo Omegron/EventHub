@@ -4,16 +4,15 @@ namespace EventHub.Services.Interfaces
 {
     public interface IEventService
     {
-        Task<EventViewDto> GetEventByIdAsync(int id);
-        Task<IEnumerable<EventViewDto>> GetEventsByOrganizerIdAsync(string id);
-        Task<IEnumerable<EventViewDto>> GetAllEventsAsync();
-        Task<int> GetEventFreeSeatsAsync(int id);
-        Task CreateEventAsync(EventCreateDto dto);
-        Task UpdateEventTitleAsync(EventTitleUpdateDto dto);
-        Task UpdateEventCapacityAsync(EventCapacityUpdateDto dto);
-        Task UpdateEventDateAsync(EventDateUpdateDto dto);
-        Task UpdateEventBookingEndDateAsync(EventBookingEndDateUpdateDto dto);
-        Task DeleteEventAsync(int id);
-
+        Task<EventViewDto> GetEventByIdAsync(int id); //HomeC, EventsC, AdminC
+        Task<IEnumerable<EventViewDto>> GetEventsByOrganizerIdAsync(string id); //HomeC, EventsC, AdminC
+        Task<IEnumerable<EventViewDto>> GetAllEventsAsync(); //HomeC, AdminC
+        Task<int> GetEventFreeSeatsAsync(int id); //HomeC, EventsC, BookingsC
+        Task CreateEventAsync(EventCreateDto dto); //EventsC
+        Task UpdateEventTitleAsync(EventTitleUpdateDto dto); //EventsC
+        Task UpdateEventCapacityAsync(EventCapacityUpdateDto dto); //EventsC
+        Task UpdateEventDateAsync(EventDateUpdateDto dto); //EventsC
+        Task UpdateEventBookingEndDateAsync(EventBookingEndDateUpdateDto dto); //EventsC
+        Task DeleteEventAsync(int id); //EventsC, AdminC
     }
 }

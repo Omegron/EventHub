@@ -4,10 +4,11 @@ namespace EventHub.Services.Interfaces
 {
     public interface IBookingService
     {
-        Task<BookingViewDto> GetBookingByIdAsync(int id);
-        Task<IEnumerable<BookingViewDto>> GetBookingsByUserIdAsync(string id);
-        Task<IEnumerable<BookingViewDto>> GetBookingsByEventIdAsync(int id);
-        Task CreateBookingAsync(BookingCreateDto dto);
-        Task DeleteBookingAsync(int id);
+        Task<BookingViewDto> GetBookingByIdAsync(int id); //BookingsC
+        Task<IEnumerable<BookingViewDto>> GetBookingsByUserIdAsync(string id); //BookingsC, AdminC
+        Task<IEnumerable<BookingViewDto>> GetBookingsByUserIdAsync(string userId, string organizerId); //EventsC
+        Task<IEnumerable<BookingViewDto>> GetBookingsByEventIdAsync(int id); //EventsC, //AdminC
+        Task CreateBookingAsync(BookingCreateDto dto); //BookingsC
+        Task DeleteBookingAsync(int id); //BookingsC, AdminC
     }
 }

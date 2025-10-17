@@ -34,12 +34,16 @@ namespace EventHub.Services.Implementations
         public async Task<IEnumerable<BookingViewDto>> GetBookingsByUserIdAsync(string userId, string organizerId)
         {
             var bookings = await _context.Bookings.Where(b => b.UserId == userId && b.Event.OrganizerId == organizerId).ToListAsync();
-            //var bookings = await _context.Bookings.Where(b => b.UserId == userId).ToListAsync();
             return _mapper.Map<IEnumerable<BookingViewDto>>(bookings);
         }
         public async Task<IEnumerable<BookingViewDto>> GetBookingsByEventIdAsync(int id)
         {
             var bookings = await _context.Bookings.Where(b => b.EventId == id).ToListAsync();
+            return _mapper.Map<IEnumerable<BookingViewDto>>(bookings);
+        }
+        public async Task<IEnumerable<BookingViewDto>> GetAllBookingsAsync()
+        {
+            var bookings = await _context.Bookings.ToListAsync();
             return _mapper.Map<IEnumerable<BookingViewDto>>(bookings);
         }
         public async Task CreateBookingAsync(BookingCreateDto dto)

@@ -1,32 +1,45 @@
 using System.Diagnostics;
 using EventHub.Models;
 using Microsoft.AspNetCore.Mvc;
+using EventHub.Services.Interfaces;
 
 namespace EventHub.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly IEventService _eventService;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(IEventService eventService)
         {
-            _logger = logger;
+            _eventService = eventService;
         }
 
-        public IActionResult Index()
+        [HttpGet]
+        public async Task<IActionResult> EventDetails(int id)
         {
-            return View();
+            var ev = await _eventService.GetEventByIdAsync(id);
+            return View(ev);
         }
 
-        public IActionResult Privacy()
+        [HttpGet]
+        public async Task<IActionResult> IndexEventsByOrganizer(string id)
         {
-            return View();
+            var events = await _eventService.GetEventsByOrganizerIdAsync(id);
+            return View(events);
         }
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
+        [HttpGet]
+        public async Task<IActionResult> IndexAllEvents()
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            var events = await _eventService.GetAllEventsAsync();
+            return View(events);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> EventFreeSeats(int id)
+        {
+            int freeSeats = await _eventService.GetEventFreeSeatsAsync(id);
+            return View(freeSeats);
         }
     }
 }
